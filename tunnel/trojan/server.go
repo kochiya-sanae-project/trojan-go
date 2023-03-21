@@ -3,6 +3,9 @@ package trojan
 import (
 	"context"
 	"fmt"
+	"github.com/p4gefau1t/trojan-go/statistic/memory"
+	"github.com/p4gefau1t/trojan-go/statistic/mysql"
+	"github.com/p4gefau1t/trojan-go/statistic/postgres"
 	"io"
 	"net"
 	"sync/atomic"
@@ -13,8 +16,6 @@ import (
 	"github.com/p4gefau1t/trojan-go/log"
 	"github.com/p4gefau1t/trojan-go/redirector"
 	"github.com/p4gefau1t/trojan-go/statistic"
-	"github.com/p4gefau1t/trojan-go/statistic/memory"
-	"github.com/p4gefau1t/trojan-go/statistic/mysql"
 	"github.com/p4gefau1t/trojan-go/tunnel"
 	"github.com/p4gefau1t/trojan-go/tunnel/mux"
 )
@@ -220,6 +221,9 @@ func NewServer(ctx context.Context, underlay tunnel.Server) (*Server, error) {
 	if cfg.MySQL.Enabled {
 		log.Debug("mysql enabled")
 		auth, err = statistic.NewAuthenticator(ctx, mysql.Name)
+	} else if cfg.Postgres.Enabled {
+		log.Info("postgres enabled")
+		auth, err = statistic.NewAuthenticator(ctx, postgres.Name)
 	} else {
 		log.Debug("auth by config file")
 		auth, err = statistic.NewAuthenticator(ctx, memory.Name)

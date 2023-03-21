@@ -60,7 +60,7 @@ func NewAuthenticator(ctx context.Context, name string) (Authenticator, error) {
 	createdAuthLock.Lock() // avoid concurrent map read/write
 	defer createdAuthLock.Unlock()
 	if auth, found := createdAuth[ctx]; found {
-		log.Debug("authenticator has been created:", name)
+		log.Info("authenticator has been created:", name)
 		return auth, nil
 	}
 	creator, found := authCreators[strings.ToUpper(name)]

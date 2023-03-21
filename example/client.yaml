@@ -1,19 +1,20 @@
 run-type: client
 local-addr: 127.0.0.1
-local-port: 1080
-remote-addr: your_server
+local-port: 2080
+remote-addr: local.kagari.link
 remote-port: 443
 password:
     - your_password
 ssl:
-    sni: your-domain-name.com
+    sni: local.kagari.link
 mux:
     enabled: true
 router:
     enabled: true
-    bypass: ['geoip:cn', 'geoip:private', 'geosite:cn', 'geosite:private']
+#    bypass: ['geoip:cn', 'geoip:private', 'geosite:cn', 'geosite:private']
+    bypass: ['geoip:private', 'geosite:private']
     block: ['geosite:category-ads']
     proxy: ['geosite:geolocation-!cn']
     default_policy: proxy
-    geoip: /usr/share/trojan-go/geoip.dat
-    geosite: /usr/share/trojan-go/geosite.dat
+    geoip: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geoip.dat
+    geosite: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geosite.dat

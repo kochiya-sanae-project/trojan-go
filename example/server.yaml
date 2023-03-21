@@ -1,17 +1,24 @@
 run-type: server
 local-addr: 0.0.0.0
 local-port: 443
-remote-addr: 127.0.0.1
+remote-addr: kagari.link
 remote-port: 80
+api:
+  enabled: true
+  api-addr: 127.0.0.1
+  api-port: 8888
 password:
   - your_password
 ssl:
-  cert: your_cert.crt
-  key: your_key.key
-  sni: your-domain-name.com
+  cert: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/fullchain.pem
+  key: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/privkey.key
+  sni: trojan.run
 router:
   enabled: true
   block:
     - 'geoip:private'
-  geoip: /usr/share/trojan-go/geoip.dat
-  geosite: /usr/share/trojan-go/geosite.dat
+  geoip: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geoip.dat
+  geosite: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geosite.dat
+postgres:
+  enabled: true
+  url: postgres://root:root@localhost/postgres?sslmode=disable
