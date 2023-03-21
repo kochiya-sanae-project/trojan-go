@@ -4,11 +4,11 @@ local-port: 2080
 remote-addr: local.kagari.link
 remote-port: 443
 password:
-    - your_password
+    - bi89h7y2erp
 ssl:
     sni: local.kagari.link
 mux:
-    enabled: true
+    enabled: false
 router:
     enabled: true
 #    bypass: ['geoip:cn', 'geoip:private', 'geosite:cn', 'geosite:private']

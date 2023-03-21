@@ -3,6 +3,8 @@ package postgres
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"github.com/lib/pq"
 	"github.com/p4gefau1t/trojan-go/common"
 	"github.com/p4gefau1t/trojan-go/config"
 	"github.com/p4gefau1t/trojan-go/log"
@@ -28,21 +30,39 @@ func (a *Authenticator) updater() {
 			hash := user.Hash()
 			sent, recv := user.ResetTraffic()
 
-			s, err := a.db.Exec("UPDATE `subscription_entity` SET `upload`=`upload`+?, `download`=`download`+? WHERE `password`=?;", recv, sent, hash)
+			s, err := a.db.Exec(
+				fmt.Sprintf(
+					"UPDATE %s SET uploaded=uploaded+$1, downloaded=downloaded+$2 WHERE %s = $3;",
+					pq.QuoteIdentifier("subscription_entity"),
+					pq.QuoteIdentifier("passwordHash")),
+				recv,
+				sent,
+				hash)
 			if err != nil {
-				log.Error(common.NewError("failed to update data to subscription table").Base(err))
+				log.Error(common.NewError(fmt.Sprintf("failed to update transfer data for %s into subscription table", hash)).Base(err))
 				continue
 			}
 
-			if recv, err := s.RowsAffected(); err != nil {
-				if recv == 0 {
+			if affected, err := s.RowsAffected(); err != nil {
+				if affected == 0 {
+					log.Info(fmt.Sprintf("del user#%s", hash))
 					a.DelUser(hash)
+				} else {
+					log.Info(fmt.Sprintf("transfer user#%s updated: %s/%s", hash, sent, recv))
 				}
 			}
 		}
 		log.Info("buffered data has been written into the database")
 
-		rows, err := a.db.Query("SELECT password,quota,download,upload FROM users;")
+		rows, err := a.db.Query(
+			//"SELECT password, uploaded, downloaded, \"transferEnable\" FROM subscription_entity;"
+			fmt.Sprintf(
+				"SELECT %s, %s, %s, %s FROM %s;",
+				pq.QuoteIdentifier("password"),
+				pq.QuoteIdentifier("uploaded"),
+				pq.QuoteIdentifier("downloaded"),
+				pq.QuoteIdentifier("transferEnable"),
+				pq.QuoteIdentifier("subscription_entity")))
 		if err != nil || rows.Err() != nil {
 			log.Error(common.NewError("failed to pull data from database").Base(err))
 			time.Sleep(a.updateDuration)

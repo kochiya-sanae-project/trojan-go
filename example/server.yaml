@@ -8,7 +8,7 @@ api:
   api-addr: 127.0.0.1
   api-port: 8888
 password:
-  - your_password
+  - bi89h7y2erp
 ssl:
   cert: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/fullchain.pem
   key: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/privkey.key
