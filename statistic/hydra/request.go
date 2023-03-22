@@ -43,7 +43,11 @@ func (client *RequestClient) RequestSync(
 	}
 
 	sender := http.Client{}
-	resp, _ := sender.Do(req)
+	resp, err := sender.Do(req)
+	if err != nil {
+		fmt.Println("HTTP call failed:", err)
+		return nil
+	}
 	respBytes, _ := io.ReadAll(resp.Body)
 	log.Debugf("response %s %s from %s", http.MethodPost, url, respBytes)
 	var result map[string]interface{}
@@ -55,6 +59,9 @@ func (client *RequestClient) RefreshToken() {
 	data := make(map[string]interface{})
 	data["refreshToken"] = client.refreshToken
 	var result = client.RequestSync(http.MethodPost, "/auth/refreshToken", nil, data, true)
+	if result == nil {
+		return
+	}
 	client.accessToken = result["accessToken"].(string)
 	client.refreshToken = result["refreshToken"].(string)
 	log.Info("hydra token refreshed successfully.")
@@ -65,6 +72,9 @@ func (client *RequestClient) Login() {
 	data["username"] = client.username
 	data["password"] = client.password
 	var result = client.RequestSync(http.MethodPost, "/auth/login", nil, data, false)
+	if result == nil {
+		return
+	}
 	client.accessToken = result["accessToken"].(string)
 	client.refreshToken = result["refreshToken"].(string)
 	log.Info("hydra authenticated successfully.")
@@ -76,12 +86,18 @@ func (client *RequestClient) UpdateTraffic(hash string, sent uint64, recv uint64
 	data["sent"] = sent
 	data["recv"] = recv
 	var result = client.RequestSync(http.MethodPost, "/api/subscriptions/updateTraffic", nil, data, true)
+	if result == nil {
+		return nil
+	}
 	log.Debugf("%s", result)
 	return result
 }
 
 func (client *RequestClient) PullSubscriptions() map[string]interface{} {
 	var result = client.RequestSync(http.MethodGet, "/api/subscriptions", nil, nil, true)
+	if result == nil {
+		return nil
+	}
 	log.Debugf("%s", result)
 	return result
 }
