@@ -5,6 +5,8 @@ import "github.com/p4gefau1t/trojan-go/config"
 type HydraConfig struct {
 	Enabled   bool   `json:"enabled" yaml:"enabled"`
 	BaseUrl   string `json:"base_url" yaml:"base-url"`
+	Username  string `json:"username" yaml:"username"`
+	Password  string `json:"password" yaml:"password"`
 	CheckRate int    `json:"check_rate" yaml:"check-rate"`
 }
 

@@ -220,7 +220,7 @@ func NewServer(ctx context.Context, underlay tunnel.Server) (*Server, error) {
 	var auth statistic.Authenticator
 	var err error
 	if cfg.MySQL.Enabled {
-		log.Debug("mysql enabled")
+		log.Info("mysql enabled")
 		auth, err = statistic.NewAuthenticator(ctx, mysql.Name)
 	} else if cfg.Postgres.Enabled {
 		log.Info("postgres enabled")
@@ -229,7 +229,7 @@ func NewServer(ctx context.Context, underlay tunnel.Server) (*Server, error) {
 		log.Info("hydra enabled")
 		auth, err = statistic.NewAuthenticator(ctx, hydra.Name)
 	} else {
-		log.Debug("auth by config file")
+		log.Info("auth by config file")
 		auth, err = statistic.NewAuthenticator(ctx, memory.Name)
 	}
 	if err != nil {

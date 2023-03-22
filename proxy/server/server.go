@@ -56,6 +56,7 @@ func init() {
 		if cfg.Shadowsocks.Enabled {
 			wsSubTree = wsSubTree.BuildNext(shadowsocks.Name)
 		}
+		// TODO this causes authenticator create twice
 		wsSubTree.BuildNext(trojan.Name).BuildNext(mux.Name).BuildNext(simplesocks.Name).IsEndpoint = true
 		wsSubTree.BuildNext(trojan.Name).IsEndpoint = true
 

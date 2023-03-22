@@ -3,12 +3,13 @@ local-addr: 0.0.0.0
 local-port: 443
 remote-addr: kagari.link
 remote-port: 80
+log-level: 0
 api:
   enabled: true
   api-addr: 127.0.0.1
   api-port: 8888
 password:
-  - bi89h7y2erp
+  - tqjflqu2g7r
 ssl:
   cert: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/.ssl/fullchain.pem
   key: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/.ssl/privkey.key
@@ -19,9 +20,13 @@ ssl:
 #    - 'geoip:private'
 #  geoip: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/geoip.dat
 #  geosite: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/geosite.dat
+mysql:
+  enabled: false
 postgres:
   enabled: false
   url: postgres://root:root@localhost/sanae?sslmode=disable
 hydra:
   enabled: true
   base-url: http://localhost:3000
+  username: root
+  password: root
