@@ -1,21 +1,21 @@
-package postgres
+package hydra
 
 import "github.com/p4gefau1t/trojan-go/config"
 
-type PostgresConfig struct {
+type HydraConfig struct {
 	Enabled   bool   `json:"enabled" yaml:"enabled"`
-	Url       string `json:"url" yaml:"url"`
+	BaseUrl   string `json:"base_url" yaml:"base-url"`
 	CheckRate int    `json:"check_rate" yaml:"check-rate"`
 }
 
 type Config struct {
-	Postgres PostgresConfig `json:"postgres" yaml:"postgres"`
+	Hydra HydraConfig `json:"hydra" yaml:"hydra"`
 }
 
 func init() {
 	config.RegisterConfigCreator(Name, func() interface{} {
 		return &Config{
-			Postgres: PostgresConfig{
+			Hydra: HydraConfig{
 				CheckRate: 30,
 			},
 		}

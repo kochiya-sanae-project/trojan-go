@@ -3,6 +3,7 @@ package trojan
 import (
 	"context"
 	"fmt"
+	"github.com/p4gefau1t/trojan-go/statistic/hydra"
 	"github.com/p4gefau1t/trojan-go/statistic/memory"
 	"github.com/p4gefau1t/trojan-go/statistic/mysql"
 	"github.com/p4gefau1t/trojan-go/statistic/postgres"
@@ -224,6 +225,9 @@ func NewServer(ctx context.Context, underlay tunnel.Server) (*Server, error) {
 	} else if cfg.Postgres.Enabled {
 		log.Info("postgres enabled")
 		auth, err = statistic.NewAuthenticator(ctx, postgres.Name)
+	} else if cfg.Hydra.Enabled {
+		log.Info("hydra enabled")
+		auth, err = statistic.NewAuthenticator(ctx, hydra.Name)
 	} else {
 		log.Debug("auth by config file")
 		auth, err = statistic.NewAuthenticator(ctx, memory.Name)

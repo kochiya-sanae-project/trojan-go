@@ -10,15 +10,18 @@ api:
 password:
   - bi89h7y2erp
 ssl:
-  cert: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/fullchain.pem
-  key: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/.ssl/privkey.key
+  cert: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/.ssl/fullchain.pem
+  key: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/.ssl/privkey.key
   sni: trojan.run
-router:
-  enabled: true
-  block:
-    - 'geoip:private'
-  geoip: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geoip.dat
-  geosite: /Users/raphaelsoul/projects/github.com/kochiya-sanae-project/trojan-go/geosite.dat
+#router:
+#  enabled: true
+#  block:
+#    - 'geoip:private'
+#  geoip: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/geoip.dat
+#  geosite: /Users/kagari/projects/github.com/p4gefau1t/trojan-go/geosite.dat
 postgres:
+  enabled: false
+  url: postgres://root:root@localhost/sanae?sslmode=disable
+hydra:
   enabled: true
-  url: postgres://root:root@localhost/postgres?sslmode=disable
+  base-url: http://localhost:3000

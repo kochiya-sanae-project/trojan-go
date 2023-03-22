@@ -12,6 +12,7 @@ type Config struct {
 	DisableHTTPCheck bool           `json:"disable_http_check" yaml:"disable-http-check"`
 	MySQL            MySQLConfig    `json:"mysql" yaml:"mysql"`
 	Postgres         PostgresConfig `json:"postgres" yaml:"postgres"`
+	Hydra            HydraConfig    `json:"hydra" yaml:"hydra"`
 	API              APIConfig      `json:"api" yaml:"api"`
 }
 
@@ -20,6 +21,10 @@ type MySQLConfig struct {
 }
 
 type PostgresConfig struct {
+	Enabled bool `json:"enabled" yaml:"enabled"`
+}
+
+type HydraConfig struct {
 	Enabled bool `json:"enabled" yaml:"enabled"`
 }
 
