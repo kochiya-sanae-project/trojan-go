@@ -36,9 +36,14 @@ func (a *Authenticator) updater() {
 		log.Info("buffered data has been written into the database")
 
 		var subscriptions = a.client.PullSubscriptions()
+
 		if subscriptions != nil {
 			// todo make it type safe and do better error handle
-			var list = subscriptions["list"].([]interface{})
+			var list []interface{}
+			if res, ok := subscriptions["list"].([]interface{}); ok {
+				list = res
+			}
+			//var list = subscriptions["list"].([]interface{})
 			for _, subscription := range list {
 				var sub = subscription.(map[string]interface{})
 				var passwordHash = sub["passwordHash"].(string)
