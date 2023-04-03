@@ -27,6 +27,7 @@ postgres:
   url: postgres://root:root@localhost/sanae?sslmode=disable
 hydra:
   enabled: true
-  base-url: http://localhost:3000
-  username: root
-  password: root
+  base-url: https://kagari.link
+  username: s1
+  password: s1
+  node-id: 8638cfe6-7324-4596-a2e3-6fd90c12b8e0

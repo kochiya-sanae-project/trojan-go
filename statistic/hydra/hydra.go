@@ -71,7 +71,7 @@ func (a *Authenticator) updater() {
 func NewAuthenticator(ctx context.Context) (statistic.Authenticator, error) {
 	cfg := config.FromContext(ctx, Name).(*Config)
 
-	client, err := NewRequestClient(ctx, cfg.Hydra.BaseUrl, cfg.Hydra.Username, cfg.Hydra.Password)
+	client, err := NewRequestClient(ctx, cfg.Hydra.BaseUrl, cfg.Hydra.NodeId, cfg.Hydra.Username, cfg.Hydra.Password)
 	if err != nil {
 		return nil, err
 	}

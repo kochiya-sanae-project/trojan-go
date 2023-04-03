@@ -12,6 +12,7 @@ import (
 
 type RequestClient struct {
 	ctx          context.Context
+	nodeId       string
 	baseUrl      string
 	accessToken  string
 	refreshToken string
@@ -94,7 +95,7 @@ func (client *RequestClient) UpdateTraffic(hash string, sent uint64, recv uint64
 }
 
 func (client *RequestClient) PullSubscriptions() map[string]interface{} {
-	var result = client.RequestSync(http.MethodGet, "/api/subscriptions", nil, nil, true)
+	var result = client.RequestSync(http.MethodGet, fmt.Sprintf("/api/nodes/%s/subscriptions", client.nodeId), nil, nil, true)
 	if result == nil {
 		return nil
 	}
@@ -102,9 +103,10 @@ func (client *RequestClient) PullSubscriptions() map[string]interface{} {
 	return result
 }
 
-func NewRequestClient(ctx context.Context, baseUrl string, username string, password string) (*RequestClient, error) {
+func NewRequestClient(ctx context.Context, baseUrl string, nodeId string, username string, password string) (*RequestClient, error) {
 	client := &RequestClient{
 		ctx:      ctx,
+		nodeId:   nodeId,
 		baseUrl:  baseUrl,
 		username: username,
 		password: password,

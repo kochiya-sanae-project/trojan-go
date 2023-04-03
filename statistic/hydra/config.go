@@ -8,6 +8,7 @@ type HydraConfig struct {
 	Username  string `json:"username" yaml:"username"`
 	Password  string `json:"password" yaml:"password"`
 	CheckRate int    `json:"check_rate" yaml:"check-rate"`
+	NodeId    string `json:"node_id" yaml:"node-id"`
 }
 
 type Config struct {
