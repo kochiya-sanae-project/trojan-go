@@ -51,9 +51,9 @@ func (a *Authenticator) updater() {
 				var downloaded, _ = strconv.ParseInt(sub["downloaded"].(string), 10, 64)
 				var transferEnable, _ = strconv.ParseInt(sub["transferEnable"].(string), 10, 64)
 				if downloaded+uploaded < transferEnable || transferEnable < 0 {
-					a.AddUser(passwordHash)
+					_ = a.AddUser(passwordHash)
 				} else {
-					a.DelUser(passwordHash)
+					_ = a.DelUser(passwordHash)
 				}
 			}
 			log.Debug("user list updated")
