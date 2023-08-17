@@ -50,7 +50,7 @@ func (client *RequestClient) RequestSync(
 		return nil
 	}
 	respBytes, _ := io.ReadAll(resp.Body)
-	log.Debugf("response %s %s from %s", http.MethodPost, url, respBytes)
+	log.Debugf("response %s %s from %s", method, url, respBytes)
 	var result map[string]interface{}
 	json.Unmarshal(respBytes, &result)
 	return result
